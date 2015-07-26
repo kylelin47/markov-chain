@@ -1,11 +1,12 @@
 """Usage:
     markov.py <input_file>... [-o <output_file>] [-s <num>] [-d <db_name>]
+    markov.py [-o <output_file>] [-s <num>] [-d <db_name>]
     markov.py -h | --help
 Options:
     -h --help         show this help message
     -o <output_file>  file to place output text
     -s <num>          number of strings to generate [default: 50]
-    -d <db_name>      where to place the markov database [default: ./markov_db]
+    -d <db_name>      database to use [default: ./markov_db]
 """
 from docopt import docopt
 from pymarkovchain import MarkovChain
@@ -17,7 +18,7 @@ def generate_markov_chain(args):
     return mc
 
 def output_markov_text(args, mc):
-    num_lines = int(args['-s'])
+    num_lines = args['-s']
     if args['-o']:
         with open(args['-o'], 'w') as output_file:
             output_text_to_file(
@@ -39,6 +40,10 @@ def read_from_files(file_names):
 
 if __name__ == '__main__':
     args = docopt(__doc__)
+    args['-s'] = int(args['-s'])
 
-    mc = generate_markov_chain(args)
+    if args['<input_file>']:
+        mc = generate_markov_chain(args)
+    else:
+        mc = MarkovChain(args['-d'])
     output_markov_text(args, mc)
