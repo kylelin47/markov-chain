@@ -1,13 +1,12 @@
-from setuptools import find_packages, setup
+from setuptools import setup
 
 setup(
-    name='markov-chain',
+    name='simplemarkov',
     version='0.1',
     install_requires=[
-        'PyMarkovChain ==1.7.5',
-        'Docopt ==0.6.1',
+        'pymarkovchain ==1.7.5',
+        'docopt ==0.6.2',
     ],
-    packages=find_packages(),
     scripts=[
         'markov/markov.py',
     ],
